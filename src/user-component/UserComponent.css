@@ -3,11 +3,28 @@
     margin-bottom: 1%;
 }
 
-.container{
+.contain{
     position: relative;
     display: inline-block;
     margin: 2%;
     padding: 20px;
     border: 1px solid #ccc!important;
     border-radius: 16px;
+}
+
+input{
+    display: none;
+    visibility: hidden;
+    size: 0;
+}
+
+.btn{
+    width: 60px;
+    height: 20px;
+    margin: 2px;
+    box-sizing: content-box; 
+}
+
+.condom{
+    text-align: left;
 }

@@ -14,16 +14,15 @@ class App extends Component {
 
     FirebaseCDB.getUserReference().get().then((doc) => {
       this.setState({ users: doc.data() });
-      console.log(doc.data());
     });
   };
 
   render() {
     const userComponents = Object.keys(this.state.users).map((user) => {
-      return <UserComponent user={this.state.users[user]} width="100" height="auto" click={(u) => { this.setState({ currentUser: u }) }} />
+      return <UserComponent user={this.state.users[user]} width="100" height="auto" displaying='none' click={(u) => { this.setState({ currentUser: u }) }} />
     });
 
-    const activeUser = this.state.users[this.state.currentUser] ? <UserComponent user={this.state.users[this.state.currentUser]} width={200} height={"auto"} /> : undefined;
+    const activeUser = this.state.users[this.state.currentUser] ? <UserComponent click={(u)=>{}}  user={this.state.users[this.state.currentUser]} width={200} height={"auto"} displaying="inline-block"/> : undefined;
 
     return (
       <div className="App">
