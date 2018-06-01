@@ -2,49 +2,27 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import UserComponent from "./user-component/UserComponent"
+import FirebaseCDB from "./firebase/FirebaseCDB"
 
 class App extends Component {
   constructor() {
     super();
-    this.users = [
-      {
-        name: "John",
-        surname: "Lennon"
-      },
-      {
-        name: "Harley",
-        surname: "Queen"
-      },
-      {
-        name: "Ярина",
-        surname: "Корань"
-      },
-      {
-        name: "Христина",
-        surname: "Пастущак"
-      },
-      {
-        name: "Кріт",
-        surname: "Ростислав"
-      },
-      {
-        name: "Журба",
-        surname: "Віталій"
-      },
-
-    ];
-
-    this.activeUser = {
-      name: "Petux",
-      surname: "Kolja"
+    this.state = {
+      users: {}
     }
-  }
+
+    FirebaseCDB.getUserReference().get().then((doc) => {
+      this.setState({ users: doc.data() });
+    });
+  };
 
   render() {
-    const userComponents = this.users.map((user) => {
-      return <UserComponent user={user} width={100} height={120} />
+    const userComponents = Object.keys(this.state.users).map((user) => {
+      return <UserComponent user={this.state.users[user]} width={100} height={120} />
     });
 
+    const activeUser = this.state.users[1] ? <UserComponent user={this.state.users[1]} width={200} height={240} /> : undefined;
+    console.log(activeUser);
 
     return (
       <div className="App">
@@ -56,8 +34,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-
-        <UserComponent user={this.activeUser} width={200} height={240} />
+        {activeUser}
       </div>
     );
   }
