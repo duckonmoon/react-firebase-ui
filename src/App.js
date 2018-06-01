@@ -8,21 +8,22 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      users: {}
+      users: {},
+      currentUser: "wqe"
     }
 
     FirebaseCDB.getUserReference().get().then((doc) => {
       this.setState({ users: doc.data() });
+      console.log(doc.data());
     });
   };
 
   render() {
     const userComponents = Object.keys(this.state.users).map((user) => {
-      return <UserComponent user={this.state.users[user]} width={100} height={120} />
+      return <UserComponent user={this.state.users[user]} width="100" height="auto" click={(u) => { this.setState({ currentUser: u }) }} />
     });
 
-    const activeUser = this.state.users[1] ? <UserComponent user={this.state.users[1]} width={200} height={240} /> : undefined;
-    console.log(activeUser);
+    const activeUser = this.state.users[this.state.currentUser] ? <UserComponent user={this.state.users[this.state.currentUser]} width={200} height={"auto"} /> : undefined;
 
     return (
       <div className="App">
